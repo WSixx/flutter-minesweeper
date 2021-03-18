@@ -69,27 +69,24 @@ class _CampoMinadoAppState extends State<CampoMinadoApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: ResultadoWidget(
-          venceu: _venceu,
-          onReiniciar: _reiniciar,
-        ),
-        body: Container(
-          color: Colors.grey,
-          child: LayoutBuilder(
-            builder: (ctx, constraints) {
-              return TabuleiroWidget(
-                tabuleiro: _getTabuleiro(
-                  constraints.maxWidth,
-                  constraints.maxHeight,
-                ),
-                onAbrir: _abrir,
-                onAlternarMarcacao: _alternarMarcacao,
-              );
-            },
-          ),
+    return Scaffold(
+      appBar: ResultadoWidget(
+        venceu: _venceu,
+        onReiniciar: _reiniciar,
+      ),
+      body: Container(
+        color: Colors.grey,
+        child: LayoutBuilder(
+          builder: (ctx, constraints) {
+            return TabuleiroWidget(
+              tabuleiro: _getTabuleiro(
+                constraints.maxWidth,
+                constraints.maxHeight,
+              ),
+              onAbrir: _abrir,
+              onAlternarMarcacao: _alternarMarcacao,
+            );
+          },
         ),
       ),
     );
