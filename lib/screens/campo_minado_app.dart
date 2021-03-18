@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_minesweeper/components/resultado_widget.dart';
 import 'package:flutter_minesweeper/components/tabuleiro_widget.dart';
 import 'package:flutter_minesweeper/models/campo.dart';
+import 'package:flutter_minesweeper/models/explosao_exception.dart';
 import 'package:flutter_minesweeper/models/tabuleiro.dart';
 
 class CampoMinadoApp extends StatefulWidget {
@@ -11,12 +12,42 @@ class CampoMinadoApp extends StatefulWidget {
 
 class _CampoMinadoAppState extends State<CampoMinadoApp> {
   bool _venceu;
-  Tabuleiro _tabuleiro = Tabuleiro(linhas: 12, colunas: 12, qtdBombas: 3);
-  void _reiniciar() {}
+  Tabuleiro _tabuleiro = Tabuleiro(linhas: 12, colunas: 12, qtdeBombas: 3);
+  void _reiniciar() {
+    setState(() {
+      _venceu = null;
+      _tabuleiro.reiniciar();
+    });
+  }
 
-  void _abrir(Campo campo) {}
+  void _abrir(Campo campo) {
+    if (_venceu != null) {
+      return;
+    }
+    setState(() {
+      try {
+        campo.abrir();
+        if (_tabuleiro.resolvido) {
+          _venceu = true;
+        }
+      } on ExplosaoException {
+        _venceu = false;
+        _tabuleiro.revelarBombas();
+      }
+    });
+  }
 
-  void _alternarMarcacao(Campo campo) {}
+  void _alternarMarcacao(Campo campo) {
+    if (_venceu != null) {
+      return;
+    }
+    setState(() {
+      campo.alternarMarcacao();
+      if (_tabuleiro.resolvido) {
+        _venceu = true;
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

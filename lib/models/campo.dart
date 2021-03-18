@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter_minesweeper/models/explosao_exception.dart';
+import 'explosao_exception.dart';
 
 class Campo {
   final int linha;
@@ -11,7 +11,10 @@ class Campo {
   bool _minado = false;
   bool _explodido = false;
 
-  Campo({@required this.linha, @required this.coluna});
+  Campo({
+    @required this.linha,
+    @required this.coluna,
+  });
 
   void adicionarVizinho(Campo vizinho) {
     final deltaLinha = (linha - vizinho.linha).abs();
@@ -20,6 +23,7 @@ class Campo {
     if (deltaLinha == 0 && deltaColuna == 0) {
       return;
     }
+
     if (deltaLinha <= 1 && deltaColuna <= 1) {
       vizinhos.add(vizinho);
     }
@@ -36,12 +40,13 @@ class Campo {
       _explodido = true;
       throw ExplosaoException();
     }
-    if (vizinhacaSegura) {
+
+    if (vizinhancaSegura) {
       vizinhos.forEach((v) => v.abrir());
     }
   }
 
-  void revelarBombas() {
+  void revelarBomba() {
     if (_minado) {
       _aberto = true;
     }
@@ -51,7 +56,7 @@ class Campo {
     _minado = true;
   }
 
-  void alternarMarccao() {
+  void alternarMarcacao() {
     _marcado = !_marcado;
   }
 
@@ -84,11 +89,11 @@ class Campo {
     return minadoEMarcado || seguroEAberto;
   }
 
-  bool get vizinhacaSegura {
-    return vizinhos.every((v) => !v._minado == false);
+  bool get vizinhancaSegura {
+    return vizinhos.every((v) => !v.minado);
   }
 
-  int get qtdMinasNaVizinhaca {
+  int get qtdeMinasNaVizinhanca {
     return vizinhos.where((v) => v.minado).length;
   }
 }

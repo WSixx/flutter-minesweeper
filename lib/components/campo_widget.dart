@@ -13,7 +13,7 @@ class CampoWidget extends StatelessWidget {
   });
 
   Widget _getImage() {
-    int qtdMinas = campo.qtdMinasNaVizinhaca;
+    int qtdMinas = campo.qtdeMinasNaVizinhanca;
     if (campo.aberto && campo.minado && campo.explodido) {
       return Image.asset('assets/images/bomba_0.jpeg');
     } else if (campo.aberto && campo.minado) {
@@ -31,7 +31,7 @@ class CampoWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () => onAbrir(campo),
-      onLongPress: () => onAlternarMarcacao,
+      onLongPress: () => onAlternarMarcacao(campo),
       child: _getImage(),
     );
   }

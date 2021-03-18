@@ -8,11 +8,12 @@ class TabuleiroWidget extends StatelessWidget {
   final void Function(Campo) onAbrir;
   final void Function(Campo) onAlternarMarcacao;
 
-  const TabuleiroWidget({
+  TabuleiroWidget({
     @required this.tabuleiro,
     @required this.onAbrir,
     @required this.onAlternarMarcacao,
   });
+
   @override
   Widget build(BuildContext context) {
     return Container(
